@@ -31,7 +31,7 @@ func(Pid) ->
 
 child_loop() ->
 	receive
-		{'EXIT', Pid, Why} -> io:format("child1: ~w ~w~n", [Pid, Why]);
+		{'EXIT', Pid, Why} -> io:format("child1: ~w ~w~n", [Pid, Why]);%只有System Process才会收到此消息
 		{Pid, Msg} -> io:format("child2: ~w ~w~n", [Pid, Msg])
 	end,
 	child_loop().

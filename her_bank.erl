@@ -1,4 +1,4 @@
--module(my_bank).
+-module(her_bank).
 -behaviour(gen_server).
 -export([start/0, stop/0, bad/0, new_account/1, withdraw/2, deposit/2, query/1, init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3, format_status/2]).
 
@@ -15,7 +15,7 @@ bad() -> gen_server:call(?MODULE, bad).
 %gen_server callbacks which executes in ?MODULE process
 init(Args) -> 
 	%process_flag(trap_exit, true),
-	io:format("my_bank started~n"),
+	io:format("her_bank started~n"),
 	{ok, ets:new(?MODULE, [])}.
 
 handle_call(notbad, From, Tab) ->

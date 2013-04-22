@@ -3,11 +3,12 @@
 -behaviour(supervisor).
 
 start() ->
-	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+	{ok, Pid} = supervisor:start_link({local, ?MODULE}, ?MODULE, []),
+	unlink(Pid).
 
 init(_) ->
 	{ok, {{one_for_one, 3, 10}, 
-		[{child1, {my_bank, start, []}, permanent, 10000, worker, [?MODULE]}]
-%		{child2, {my_bank, start, []}, permanent, brutal_kill, worker, [?MODULE]}, 
+		[{child1, {my_bank, start, []}, permanent, 10000, worker, [?MODULE]},
+		{child2, {her_bank, start, []}, permanent, brutal_kill, worker, [?MODULE]}] 
 %		{child3, {my_bank, start, []}, permanent, brutal_kill, worker, [?MODULE]}]
 		 }}.
