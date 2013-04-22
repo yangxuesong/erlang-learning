@@ -1,6 +1,6 @@
 -module(my_bank).
 -behaviour(gen_server).
--export([start/0, stop/0, new_account/1, withdraw/2, deposit/2, query/1, init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3, format_status/2]).
+-export([start/0, stop/0, bad/0, new_account/1, withdraw/2, deposit/2, query/1, init/1, handle_call/3, handle_cast/2, handle_info/2, terminate/2, code_change/3, format_status/2]).
 
 start()-> gen_server:start_link({local, ?MODULE}, ?MODULE, [], []).
 stop() -> gen_server:call(?MODULE, stop).
@@ -10,9 +10,15 @@ new_account(Who) -> gen_server:call(?MODULE, {new, Who}).
 withdraw(Who, Number) -> gen_server:call(?MODULE, {withdraw, Who, Number}).
 deposit(Who, Number) -> gen_server:call(?MODULE, {deposit, Who, Number}).
 query(Who) -> gen_server:call(?MODULE, {query, Who}).
+bad() -> gen_server:call(?MODULE, bad).
 
 %gen_server callbacks which executes in ?MODULE process
-init(Args) -> {ok, ets:new(?MODULE, [])}.
+init(Args) -> 
+	io:format("my_bank started~n"),
+	{ok, ets:new(?MODULE, [])}.
+
+handle_call(bad, From, Tab) ->
+	exit("crap");
 
 handle_call({new, Who}, From, Tab) ->
 	io:format("~w", [Who]),
