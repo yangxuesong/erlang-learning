@@ -6,7 +6,7 @@
 
 %% Erlang Shell的任何crash都会导致supervisor exit.
 start_link() ->
-supervisor:start_link({local, ?SERVER}, ?MODULE, []).
+	supervisor:start_link({local, ?SERVER}, ?MODULE, []).
 
 start_in_shell() ->
 {ok, Pid} = supervisor:start_link({local, ?SERVER}, ?MODULE, []),
